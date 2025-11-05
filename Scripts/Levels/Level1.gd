@@ -41,7 +41,7 @@ func _on_level_complete():
 	
 	# انتقال ناعم
 	var tween = create_tween()
-	tween.tween_property(get_viewport(), "canvas_item", "modulate:a", 0.0, 1.0)
+	tween.tween_property(get_viewport(), "modulate:a", 0.0, 1.0)
 	
 	await tween.finished
 	

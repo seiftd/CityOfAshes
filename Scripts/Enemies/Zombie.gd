@@ -59,7 +59,8 @@ func _physics_process(delta):
 			_wander()
 	
 	# تطبيق الجاذبية والحركة
-	velocity.y += get_gravity() * delta
+	var gravity_value = ProjectSettings.get_setting("physics/2d/default_gravity", 980.0)
+	velocity.y += gravity_value * delta
 	move_and_slide()
 	
 	# تحديث اتجاه الـ sprite
@@ -134,7 +135,4 @@ func _on_player_detected(body: Node2D):
 func _on_player_lost(body: Node2D):
 	if body == player:
 		player = null
-
-func get_gravity() -> float:
-	return ProjectSettings.get_setting("physics/2d/default_gravity", 980.0)
 

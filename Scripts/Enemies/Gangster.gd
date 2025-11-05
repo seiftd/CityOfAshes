@@ -56,7 +56,8 @@ func _physics_process(delta):
 		else:
 			_wander()
 	
-	velocity.y += get_gravity() * delta
+	var gravity_value = ProjectSettings.get_setting("physics/2d/default_gravity", 980.0)
+	velocity.y += gravity_value * delta
 	move_and_slide()
 	
 	if sprite and direction != 0:
@@ -140,7 +141,4 @@ func _on_player_lost(body: Node2D):
 
 func _on_attack_timer_timeout():
 	is_attacking = false
-
-func get_gravity() -> float:
-	return ProjectSettings.get_setting("physics/2d/default_gravity", 980.0)
 
