@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/zombie_growl.mp3-d9e1c0a94bc0b6fbb9a741a0f1e5365e.mp3str"
+
+[deps]
+
+source_file="res://assets/sfx/zombie_growl.mp3"
+dest_files=[ "res://.import/zombie_growl.mp3-d9e1c0a94bc0b6fbb9a741a0f1e5365e.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

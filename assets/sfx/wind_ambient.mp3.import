@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/wind_ambient.mp3-c570ba29e364fd74674ee4b352f6947e.mp3str"
+
+[deps]
+
+source_file="res://assets/sfx/wind_ambient.mp3"
+dest_files=[ "res://.import/wind_ambient.mp3-c570ba29e364fd74674ee4b352f6947e.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

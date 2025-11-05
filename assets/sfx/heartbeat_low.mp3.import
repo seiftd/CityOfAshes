@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/heartbeat_low.mp3-149b28b0c1b32d21b0d877544538e687.mp3str"
+
+[deps]
+
+source_file="res://assets/sfx/heartbeat_low.mp3"
+dest_files=[ "res://.import/heartbeat_low.mp3-149b28b0c1b32d21b0d877544538e687.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

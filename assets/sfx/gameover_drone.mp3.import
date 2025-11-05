@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/gameover_drone.mp3-0c6318c975cfbf3a0450e190ee4a6b24.mp3str"
+
+[deps]
+
+source_file="res://assets/sfx/gameover_drone.mp3"
+dest_files=[ "res://.import/gameover_drone.mp3-0c6318c975cfbf3a0450e190ee4a6b24.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

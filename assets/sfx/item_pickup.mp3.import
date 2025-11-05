@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/item_pickup.mp3-f928be3568bc3ae9ba0743e6e07a2dc9.mp3str"
+
+[deps]
+
+source_file="res://assets/sfx/item_pickup.mp3"
+dest_files=[ "res://.import/item_pickup.mp3-f928be3568bc3ae9ba0743e6e07a2dc9.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

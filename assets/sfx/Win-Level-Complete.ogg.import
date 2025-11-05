@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Win-Level-Complete.ogg-c10111edf66e6a3d1e546c1a6b83e014.oggstr"
+
+[deps]
+
+source_file="res://assets/sfx/Win-Level-Complete.ogg"
+dest_files=[ "res://.import/Win-Level-Complete.ogg-c10111edf66e6a3d1e546c1a6b83e014.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
