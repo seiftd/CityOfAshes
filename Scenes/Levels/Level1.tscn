@@ -1,0 +1,340 @@
+[gd_scene load_steps=15 format=3 uid="uid://b1x2y3z4a5b6c7d8"]
+
+[ext_resource type="Script" path="res://Scripts/Levels/Level1.gd" id="1"]
+[ext_resource type="Script" path="res://Scripts/UI/LevelHUD.gd" id="2"]
+[ext_resource type="Script" path="res://Scripts/UI/Portal.gd" id="3"]
+[ext_resource type="Script" path="res://Scripts/Enemies/Zombie.gd" id="4"]
+[ext_resource type="Script" path="res://Scripts/Enemies/Gangster.gd" id="5"]
+[ext_resource type="Texture2D" path="res://assets/backgrounds/level1.png" id="6"]
+[ext_resource type="TileSet" path="res://assets/tilesets/city_tileset.tres" id="7"]
+[ext_resource type="AudioStream" path="res://assets/music/level1_theme.ogg" id="8"]
+[ext_resource type="AudioStream" path="res://assets/sfx/wind_ambient.mp3" id="9"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2"]
+size = Vector2(100, 100)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1"]
+radius = 50.0
+
+[node name="Level1" type="Node2D"]
+script = ExtResource("1")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(1920, 1080)
+
+[node name="Background" type="TextureRect" parent="ParallaxBackground/ParallaxLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="TileMap" type="TileMap" parent="."]
+position = Vector2(0, 800)
+tile_set = ExtResource("7")
+format = 2
+layer = 0
+tile_data = PackedInt32Array(0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 15, 0, 0, 16, 0, 0, 17, 0, 0, 18, 0, 0, 19, 0, 0, 20, 0, 0, 21, 0, 0, 22, 0, 0, 23, 0, 0, 24, 0, 0, 25, 0, 0, 26, 0, 0, 27, 0, 0, 28, 0, 0, 29, 0, 0, 30, 0, 0, 31, 0, 0, 32, 0, 0, 33, 0, 0, 34, 0, 0, 35, 0, 0, 36, 0, 0, 37, 0, 0, 38, 0, 0, 39, 0, 0, 40, 0, 0, 41, 0, 0, 42, 0, 0, 43, 0, 0, 44, 0, 0, 45, 0, 0, 46, 0, 0, 47, 0, 0, 48, 0, 0, 49, 0, 0, 50, 0, 0, 51, 0, 0, 52, 0, 0, 53, 0, 0, 54, 0, 0, 55, 0, 0, 56, 0, 0, 57, 0, 0, 58, 0, 0, 59, 0)
+
+[node name="Props" type="Node2D" parent="."]
+
+[node name="FireBarrel" type="AnimatedSprite2D" parent="Props"]
+position = Vector2(500, 750)
+scale = Vector2(2, 2)
+
+[node name="Fence" type="StaticBody2D" parent="Props"]
+position = Vector2(800, 750)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Props/Fence"]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="Car" type="StaticBody2D" parent="Props"]
+position = Vector2(1200, 750)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Props/Car"]
+shape = SubResource("RectangleShape2D_2")
+
+[node name="LampPost" type="Node2D" parent="Props"]
+position = Vector2(1500, 750)
+
+[node name="Light2D" type="Light2D" parent="Props/LampPost"]
+energy = 1.5
+shadow_enabled = true
+range_height = 400.0
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Zombie_1" type="CharacterBody2D" parent="Enemies"]
+position = Vector2(400, 700)
+script = ExtResource("4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies/Zombie_1"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Zombie_1"]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="DetectionArea" type="Area2D" parent="Enemies/Zombie_1"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Zombie_1/DetectionArea"]
+shape = SubResource("CircleShape2D_1")
+
+[node name="AttackTimer" type="Timer" parent="Enemies/Zombie_1"]
+wait_time = 1.0
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Enemies/Zombie_1"]
+
+[node name="Zombie_2" type="CharacterBody2D" parent="Enemies"]
+position = Vector2(600, 700)
+script = ExtResource("4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies/Zombie_2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Zombie_2"]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="DetectionArea" type="Area2D" parent="Enemies/Zombie_2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Zombie_2/DetectionArea"]
+shape = SubResource("CircleShape2D_1")
+
+[node name="AttackTimer" type="Timer" parent="Enemies/Zombie_2"]
+wait_time = 1.0
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Enemies/Zombie_2"]
+
+[node name="Zombie_3" type="CharacterBody2D" parent="Enemies"]
+position = Vector2(900, 700)
+script = ExtResource("4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies/Zombie_3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Zombie_3"]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="DetectionArea" type="Area2D" parent="Enemies/Zombie_3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Zombie_3/DetectionArea"]
+shape = SubResource("CircleShape2D_1")
+
+[node name="AttackTimer" type="Timer" parent="Enemies/Zombie_3"]
+wait_time = 1.0
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Enemies/Zombie_3"]
+
+[node name="Zombie_4" type="CharacterBody2D" parent="Enemies"]
+position = Vector2(1100, 700)
+script = ExtResource("4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies/Zombie_4"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Zombie_4"]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="DetectionArea" type="Area2D" parent="Enemies/Zombie_4"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Zombie_4/DetectionArea"]
+shape = SubResource("CircleShape2D_1")
+
+[node name="AttackTimer" type="Timer" parent="Enemies/Zombie_4"]
+wait_time = 1.0
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Enemies/Zombie_4"]
+
+[node name="Zombie_5" type="CharacterBody2D" parent="Enemies"]
+position = Vector2(1400, 700)
+script = ExtResource("4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies/Zombie_5"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Zombie_5"]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="DetectionArea" type="Area2D" parent="Enemies/Zombie_5"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Zombie_5/DetectionArea"]
+shape = SubResource("CircleShape2D_1")
+
+[node name="AttackTimer" type="Timer" parent="Enemies/Zombie_5"]
+wait_time = 1.0
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Enemies/Zombie_5"]
+
+[node name="Zombie_6" type="CharacterBody2D" parent="Enemies"]
+position = Vector2(1700, 700)
+script = ExtResource("4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies/Zombie_6"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Zombie_6"]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="DetectionArea" type="Area2D" parent="Enemies/Zombie_6"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Zombie_6/DetectionArea"]
+shape = SubResource("CircleShape2D_1")
+
+[node name="AttackTimer" type="Timer" parent="Enemies/Zombie_6"]
+wait_time = 1.0
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Enemies/Zombie_6"]
+
+[node name="Zombie_7" type="CharacterBody2D" parent="Enemies"]
+position = Vector2(2000, 700)
+script = ExtResource("4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies/Zombie_7"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Zombie_7"]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="DetectionArea" type="Area2D" parent="Enemies/Zombie_7"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Zombie_7/DetectionArea"]
+shape = SubResource("CircleShape2D_1")
+
+[node name="AttackTimer" type="Timer" parent="Enemies/Zombie_7"]
+wait_time = 1.0
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Enemies/Zombie_7"]
+
+[node name="Zombie_8" type="CharacterBody2D" parent="Enemies"]
+position = Vector2(2300, 700)
+script = ExtResource("4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies/Zombie_8"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Zombie_8"]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="DetectionArea" type="Area2D" parent="Enemies/Zombie_8"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Zombie_8/DetectionArea"]
+shape = SubResource("CircleShape2D_1")
+
+[node name="AttackTimer" type="Timer" parent="Enemies/Zombie_8"]
+wait_time = 1.0
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Enemies/Zombie_8"]
+
+[node name="Zombie_9" type="CharacterBody2D" parent="Enemies"]
+position = Vector2(2600, 700)
+script = ExtResource("4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies/Zombie_9"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Zombie_9"]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="DetectionArea" type="Area2D" parent="Enemies/Zombie_9"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Zombie_9/DetectionArea"]
+shape = SubResource("CircleShape2D_1")
+
+[node name="AttackTimer" type="Timer" parent="Enemies/Zombie_9"]
+wait_time = 1.0
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Enemies/Zombie_9"]
+
+[node name="Zombie_10" type="CharacterBody2D" parent="Enemies"]
+position = Vector2(2900, 700)
+script = ExtResource("4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies/Zombie_10"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Zombie_10"]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="DetectionArea" type="Area2D" parent="Enemies/Zombie_10"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Zombie_10/DetectionArea"]
+shape = SubResource("CircleShape2D_1")
+
+[node name="AttackTimer" type="Timer" parent="Enemies/Zombie_10"]
+wait_time = 1.0
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Enemies/Zombie_10"]
+
+[node name="Gangster_1" type="CharacterBody2D" parent="Enemies"]
+position = Vector2(1800, 700)
+script = ExtResource("5")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies/Gangster_1"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Gangster_1"]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="DetectionArea" type="Area2D" parent="Enemies/Gangster_1"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Gangster_1/DetectionArea"]
+shape = SubResource("CircleShape2D_1")
+
+[node name="AttackTimer" type="Timer" parent="Enemies/Gangster_1"]
+wait_time = 1.5
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Enemies/Gangster_1"]
+
+[node name="PlayerStart" type="Marker2D" parent="."]
+position = Vector2(100, 700)
+
+[node name="PortalEnd" type="Area2D" parent="."]
+position = Vector2(3500, 700)
+script = ExtResource("3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PortalEnd"]
+shape = SubResource("CircleShape2D_1")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="PortalEnd"]
+stream = ExtResource("9")
+
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8")
+volume_db = -5.0
+autoplay = true
+
+[node name="Ambient" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9")
+volume_db = -10.0
+autoplay = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+enabled = true
+limit_left = 0
+limit_top = 0
+limit_right = 4000
+limit_bottom = 1080
+position_smoothing_enabled = true
+position_smoothing_speed = 5.0
+
+[node name="HUD" type="CanvasLayer" parent="."]
+script = ExtResource("2")
+
+[node name="TutorialLabel" type="Label" parent="HUD"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -100.0
+offset_right = 200.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Use Left/Right arrows to move
+Press Jump to leap over obstacles
+Tap Fire to shoot enemies"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="level_complete" from="PortalEnd" to="." method="_on_level_complete"]
+
