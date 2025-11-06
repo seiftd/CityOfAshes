@@ -66,7 +66,7 @@ func goto_game_over():
 func set_enemies_count(count: int):
 	enemies_remaining = count
 
-func enemy_killed():
+func on_enemy_killed():
 	enemies_remaining -= 1
 	player_score += 100
 	enemy_killed.emit()

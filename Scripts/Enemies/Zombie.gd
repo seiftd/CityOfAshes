@@ -128,7 +128,7 @@ func _die():
 	
 	# Notify GameManager
 	if GameManager:
-		GameManager.enemy_killed()
+		GameManager.on_enemy_killed()
 	
 	# إزالة العدو بعد ثانيتين
 	await get_tree().create_timer(2.0).timeout
