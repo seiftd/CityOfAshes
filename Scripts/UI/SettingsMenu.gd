@@ -69,6 +69,9 @@ func _toggle_sfx(button_pressed: bool):
 	if sfx_bus_index >= 0:
 		AudioServer.set_bus_mute(sfx_bus_index, !button_pressed)
 	
+	# تحديث modulate بناءً على الحالة
+	_update_toggle_visual(sfx_toggle, button_pressed)
+	
 	_play_sound(sfx_click)
 	_save_settings()
 
@@ -84,8 +87,18 @@ func _toggle_music(button_pressed: bool):
 	if music_bus_index >= 0:
 		AudioServer.set_bus_mute(music_bus_index, !button_pressed)
 	
+	# تحديث modulate بناءً على الحالة
+	_update_toggle_visual(music_toggle, button_pressed)
+	
 	_play_sound(sfx_click)
 	_save_settings()
+
+func _update_toggle_visual(toggle: TextureButton, is_on: bool):
+	if toggle:
+		if is_on:
+			toggle.modulate = Color(1, 1, 1, 1)
+		else:
+			toggle.modulate = Color(0.6, 0.6, 0.6, 1)
 
 func _go_back():
 	_play_sound(sfx_click)
@@ -127,13 +140,19 @@ func _load_settings():
 			file.close()
 			
 			if sfx_toggle:
-				sfx_toggle.button_pressed = data.get("sfx", true)
+				var sfx_state = data.get("sfx", true)
+				sfx_toggle.button_pressed = sfx_state
+				_update_toggle_visual(sfx_toggle, sfx_state)
 			if music_toggle:
-				music_toggle.button_pressed = data.get("music", false)
+				var music_state = data.get("music", false)
+				music_toggle.button_pressed = music_state
+				_update_toggle_visual(music_toggle, music_state)
 	else:
 		# القيم الافتراضية
 		if sfx_toggle:
 			sfx_toggle.button_pressed = true
+			_update_toggle_visual(sfx_toggle, true)
 		if music_toggle:
 			music_toggle.button_pressed = false
+			_update_toggle_visual(music_toggle, false)
 
