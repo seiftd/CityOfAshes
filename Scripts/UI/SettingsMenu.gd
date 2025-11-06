@@ -57,16 +57,14 @@ func _ready() -> void:
 	if toggle_fx:
 		toggle_fx.play("GlowPulse")
 
-func _on_toggle_sfx() -> void:
-	var new_state := not AudioManager.sfx_enabled
-	AudioManager.set_sfx_enabled(new_state)
-	_apply_toggle_visual(toggle_sfx, new_state)
+func _on_toggle_sfx(button_pressed: bool) -> void:
+	AudioManager.set_sfx_enabled(button_pressed)
+	_apply_toggle_visual(toggle_sfx, button_pressed)
 	_play_click()
 
-func _on_toggle_music() -> void:
-	var new_state := not AudioManager.music_enabled
-	AudioManager.set_music_enabled(new_state)
-	_apply_toggle_visual(toggle_music, new_state)
+func _on_toggle_music(button_pressed: bool) -> void:
+	AudioManager.set_music_enabled(button_pressed)
+	_apply_toggle_visual(toggle_music, button_pressed)
 	_play_click()
 
 func _apply_toggle_visual(btn: TextureButton, enabled: bool) -> void:

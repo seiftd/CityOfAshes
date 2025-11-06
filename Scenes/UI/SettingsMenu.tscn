@@ -75,7 +75,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1"]
 _data = {
-"GlowPulse": SubResource("Animation_1")
+"GlowPulse": SubResource("Animation_1"),
+"TogglePulse": SubResource("Animation_2")
 }
 
 [node name="SettingsMenu" type="Control"]
@@ -116,7 +117,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.4)
+color = Color(0, 0, 0, 0.45)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -158,10 +159,13 @@ size_flags_horizontal = 3
 
 [node name="ToggleButton_SFX" type="TextureButton" parent="VBoxContainer/HBox_SFX"]
 layout_mode = 2
+custom_minimum_size = Vector2(160, 64)
 toggle_mode = true
 button_pressed = true
 texture_normal = ExtResource("3")
 texture_pressed = ExtResource("4")
+expand_mode = 1
+stretch_mode = 4
 modulate = Color(1, 1, 1, 1)
 focus_mode = 2
 
@@ -189,10 +193,13 @@ size_flags_horizontal = 3
 
 [node name="ToggleButton_Music" type="TextureButton" parent="VBoxContainer/HBox_Music"]
 layout_mode = 2
+custom_minimum_size = Vector2(160, 64)
 toggle_mode = true
 button_pressed = false
 texture_normal = ExtResource("3")
 texture_pressed = ExtResource("4")
+expand_mode = 1
+stretch_mode = 4
 modulate = Color(0.6, 0.6, 0.6, 1)
 focus_mode = 2
 

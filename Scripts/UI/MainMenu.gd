@@ -87,11 +87,11 @@ func _on_settings_button_pressed():
 	await fade_out.finished
 	
 	# الانتقال للإعدادات
-	var settings_path = "res://Scenes/UI/Settings.tscn"
+	var settings_path = "res://Scenes/UI/SettingsMenu.tscn"
 	if ResourceLoader.exists(settings_path):
 		get_tree().change_scene_to_file(settings_path)
 	else:
-		print("Settings scene not found")
+		print("Settings scene not found: ", settings_path)
 		var fade_in = create_tween()
 		fade_in.tween_property(self, "modulate:a", 1.0, 0.5)
 

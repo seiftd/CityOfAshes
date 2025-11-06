@@ -1,6 +1,5 @@
 extends Node
 
-class_name AudioManager
 
 ## AudioManager - يدير إعدادات الصوت والموسيقى
 ## Singleton (Autoload) للتحكم في Audio buses
@@ -61,7 +60,7 @@ func load_settings() -> void:
 	
 	var f := FileAccess.open(SAVE_PATH, FileAccess.READ)
 	if f:
-		var data := f.get_var()
+		var data: Dictionary = f.get_var()
 		f.close()
 		sfx_enabled = bool(data.get("sfx_enabled", true))
 		music_enabled = bool(data.get("music_enabled", true))
