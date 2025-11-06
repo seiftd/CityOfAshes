@@ -71,11 +71,12 @@ func _on_new_game_pressed():
 func _on_reload_pressed():
 	_play_click_sound()
 	# محاولة تحميل آخر حفظ
-	if SaveManager:
-		if SaveManager.has_method("load_last_save"):
-			SaveManager.load_last_save()
+	if has_node("/root/SaveManager"):
+		var save_manager = get_node("/root/SaveManager")
+		if save_manager.has_method("load_last_save"):
+			save_manager.load_last_save()
 		else:
-			print("SaveManager.load_last_save() not available")
+			print("SaveManager.load_last_save() not available, starting new game")
 			_transition_to_scene("res://Scenes/Levels/Level1.tscn")
 	else:
 		print("SaveManager not found, starting new game")
@@ -110,21 +111,25 @@ func _transition_to_scene(path: String):
 
 func _play_hover_sound():
 	if hover_sound:
-		var hover_file = load("res://assets/sfx/button_hover.mp3")
-		if hover_file and ResourceLoader.exists("res://assets/sfx/button_hover.mp3"):
-			hover_sound.stream = hover_file
-			hover_sound.volume_db = -8.0
-			hover_sound.play()
-		elif click_sound:
-			# استخدام click sound كـ backup
+		if ResourceLoader.exists("res://assets/sfx/button_hover.mp3"):
+			var hover_file = load("res://assets/sfx/button_hover.mp3")
+			if hover_file:
+				hover_sound.stream = hover_file
+				hover_sound.volume_db = -8.0
+				hover_sound.play()
+				return
+		
+		# استخدام click sound كـ backup
+		if click_sound:
 			click_sound.volume_db = -12.0
 			click_sound.play()
 
 func _play_click_sound():
 	if click_sound:
-		var click_file = load("res://assets/sfx/button_click.mp3")
-		if click_file:
-			click_sound.stream = click_file
-			click_sound.volume_db = -5.0
-			click_sound.play()
+		if ResourceLoader.exists("res://assets/sfx/button_click.mp3"):
+			var click_file = load("res://assets/sfx/button_click.mp3")
+			if click_file:
+				click_sound.stream = click_file
+				click_sound.volume_db = -5.0
+				click_sound.play()
 

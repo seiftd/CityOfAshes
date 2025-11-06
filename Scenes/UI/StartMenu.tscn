@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://start_menu_scene"]
+[gd_scene load_steps=11 format=3 uid="uid://start_menu_scene"]
 
 [ext_resource type="Script" path="res://Scripts/UI/StartMenu.gd" id="1"]
 [ext_resource type="Texture2D" path="res://assets/backgrounds/menus/1st.jpg" id="2"]
 [ext_resource type="Texture2D" path="res://assets/backgrounds/menus/start_but.jpg" id="3"]
 [ext_resource type="AudioStream" path="res://assets/music/level1_theme.ogg" id="4"]
 [ext_resource type="AudioStream" path="res://assets/sfx/button_click.mp3" id="5"]
+[ext_resource type="AudioStream" path="res://assets/sfx/button_hover.mp3" id="6"]
 
 [sub_resource type="Gradient" id="Gradient_1"]
 colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0)
@@ -197,6 +198,7 @@ libraries = {
 }
 
 [node name="HoverSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6")
 volume_db = -8.0
 
 [node name="ClickSound" type="AudioStreamPlayer" parent="."]
