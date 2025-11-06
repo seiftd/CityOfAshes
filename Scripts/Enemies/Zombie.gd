@@ -20,6 +20,8 @@ var is_attacking: bool = false
 var is_dead: bool = false
 
 func _ready():
+	add_to_group("enemies")
+	
 	# إعداد Animation
 	if sprite:
 		sprite.play("Idle")
@@ -123,6 +125,10 @@ func _die():
 	# إزالة Collision بعد الموت
 	if collision_shape:
 		collision_shape.set_deferred("disabled", true)
+	
+	# Notify GameManager
+	if GameManager:
+		GameManager.enemy_killed()
 	
 	# إزالة العدو بعد ثانيتين
 	await get_tree().create_timer(2.0).timeout
