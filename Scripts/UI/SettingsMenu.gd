@@ -8,8 +8,17 @@ extends Control
 @onready var back_btn: TextureButton = $"VBoxContainer/BackButton"
 @onready var toggle_fx: AnimationPlayer = $ToggleFX
 
-const TEX_ON := preload("res://assets/ui/toggle_on.jpg")
-const TEX_OFF := preload("res://assets/ui/toggle_off.jpg")
+# Try to load PNG first, fallback to JPG
+var TEX_ON: Texture2D
+var TEX_OFF: Texture2D
+
+func _load_textures():
+	if ResourceLoader.exists("res://assets/ui/toggle_on.png"):
+		TEX_ON = load("res://assets/ui/toggle_on.png")
+		TEX_OFF = load("res://assets/ui/toggle_off.png")
+	else:
+		TEX_ON = load("res://assets/ui/toggle_on.jpg")
+		TEX_OFF = load("res://assets/ui/toggle_off.jpg")
 
 var click_snd := preload("res://assets/sfx/button_click.mp3")
 var hover_snd := preload("res://assets/sfx/button_hover.mp3")
@@ -18,6 +27,9 @@ var asp_click: AudioStreamPlayer
 var asp_hover: AudioStreamPlayer
 
 func _ready() -> void:
+	# Load textures
+	_load_textures()
+	
 	# SFX players
 	asp_click = AudioStreamPlayer.new()
 	asp_click.bus = "SFX"
@@ -71,10 +83,27 @@ func _apply_toggle_visual(btn: TextureButton, enabled: bool) -> void:
 	if not btn:
 		return
 	
-	btn.texture_normal = TEX_ON if enabled else TEX_OFF
-	btn.texture_hover = btn.texture_normal
-	btn.texture_pressed = btn.texture_normal
-	btn.modulate = Color(1, 1, 1, 1) if enabled else Color(0.7, 0.7, 0.7, 1)
+	# Set textures
+	if ResourceLoader.exists("res://assets/ui/toggle_on.png"):
+		btn.texture_normal = load("res://assets/ui/toggle_off.png")
+		btn.texture_pressed = load("res://assets/ui/toggle_on.png")
+		btn.texture_hover = load("res://assets/ui/toggle_on.png")
+	else:
+		# Fallback to .jpg if .png doesn't exist
+		btn.texture_normal = TEX_OFF
+		btn.texture_pressed = TEX_ON
+		btn.texture_hover = TEX_ON
+	
+	# Update button state
+	btn.button_pressed = enabled
+	
+	# Visual effects based on state
+	if enabled:
+		btn.modulate = Color(0.8, 1.0, 1.0, 1.0)  # Cyan tint when ON
+		btn.scale = Vector2(1.05, 1.05)
+	else:
+		btn.modulate = Color(1.0, 0.8, 0.8, 1.0)  # Red tint when OFF
+		btn.scale = Vector2(1.0, 1.0)
 
 func _on_button_exit(button: Control):
 	# إرجاع الحجم الطبيعي
