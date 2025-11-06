@@ -3,16 +3,16 @@ extends Control
 ## StartMenu - قائمة البدء
 ## يدير الأزرار والانتقالات
 
-@onready var new_game_button: TextureButton = $ButtonsContainer/NewGameButton
-@onready var reload_button: TextureButton = $ButtonsContainer/ReloadButton
-@onready var stage_button: TextureButton = $ButtonsContainer/StageButton
-@onready var shop_button: TextureButton = $ButtonsContainer/ShopButton
-@onready var back_button: TextureButton = $ButtonsContainer/BackButton
+@onready var new_game_button: Button = $ButtonsContainer/NewGameButton
+@onready var reload_button: Button = $ButtonsContainer/ReloadButton
+@onready var stage_button: Button = $ButtonsContainer/StageButton
+@onready var shop_button: Button = $ButtonsContainer/ShopButton
+@onready var back_button: Button = $ButtonsContainer/BackButton
 @onready var button_fx: AnimationPlayer = $ButtonFX
 @onready var hover_sound: AudioStreamPlayer = $HoverSound
 @onready var click_sound: AudioStreamPlayer = $ClickSound
 
-var buttons: Array[TextureButton] = []
+var buttons: Array[Button] = []
 
 func _ready():
 	# جمع جميع الأزرار
@@ -47,7 +47,7 @@ func _setup_buttons():
 		back_button.mouse_entered.connect(func(): _on_button_hover(back_button))
 		back_button.mouse_exited.connect(func(): _on_button_exit(back_button))
 
-func _on_button_hover(button: TextureButton):
+func _on_button_hover(button: Button):
 	# تأثير hover - تكبير
 	var tween = create_tween()
 	tween.tween_property(button, "scale", Vector2(1.05, 1.05), 0.2)
@@ -59,7 +59,7 @@ func _on_button_hover(button: TextureButton):
 	# تشغيل صوت hover
 	_play_hover_sound()
 
-func _on_button_exit(button: TextureButton):
+func _on_button_exit(button: Button):
 	# إرجاع الحجم الطبيعي
 	var tween = create_tween()
 	tween.tween_property(button, "scale", Vector2(1.0, 1.0), 0.2)

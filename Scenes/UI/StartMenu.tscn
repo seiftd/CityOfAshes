@@ -1,25 +1,61 @@
-[gd_scene load_steps=11 format=3 uid="uid://start_menu_scene"]
+[gd_scene load_steps=14 format=3 uid="uid://start_menu_scene"]
 
 [ext_resource type="Script" path="res://Scripts/UI/StartMenu.gd" id="1"]
 [ext_resource type="Texture2D" path="res://assets/backgrounds/menus/1st.jpg" id="2"]
-[ext_resource type="Texture2D" path="res://assets/backgrounds/menus/start_but.jpg" id="3"]
-[ext_resource type="AudioStream" path="res://assets/music/level1_theme.ogg" id="4"]
-[ext_resource type="AudioStream" path="res://assets/sfx/button_click.mp3" id="5"]
-[ext_resource type="AudioStream" path="res://assets/sfx/button_hover.mp3" id="6"]
+[ext_resource type="AudioStream" path="res://assets/music/level1_theme.ogg" id="3"]
+[ext_resource type="AudioStream" path="res://assets/sfx/button_click.mp3" id="4"]
+[ext_resource type="AudioStream" path="res://assets/sfx/button_hover.mp3" id="5"]
+[ext_resource type="FontFile" path="res://assets/fonts/PressStart2P-Regular.ttf" id="6"]
 
 [sub_resource type="Gradient" id="Gradient_1"]
-colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_1"]
 gradient = SubResource("Gradient_1")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1"]
 direction = Vector3(0, -1, 0)
-initial_velocity_min = 20.0
-initial_velocity_max = 40.0
-gravity = Vector3(0, -50, 0)
-scale_min = 0.5
-scale_max = 1.5
+initial_velocity_min = 15.0
+initial_velocity_max = 30.0
+gravity = Vector3(0, -30, 0)
+scale_min = 0.3
+scale_max = 0.8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0.1, 0.1, 0.1, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 1, 1, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2"]
+bg_color = Color(0.15, 0.15, 0.15, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.5, 1, 1, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3"]
+bg_color = Color(0.2, 0.2, 0.2, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.3, 0.8, 1, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [sub_resource type="Animation" id="Animation_1"]
 resource_name = "HoverHighlight"
@@ -109,34 +145,18 @@ grow_vertical = 2
 texture = ExtResource("2")
 expand_mode = 1
 stretch_mode = 5
+modulate = Color(1, 1, 1, 1)
 
 [node name="Particles" type="Particles2D" parent="."]
 position = Vector2(960, 1080)
 emitting = true
-amount = 50
-lifetime = 5.0
+amount = 30
+lifetime = 8.0
 texture = SubResource("GradientTexture1D_1")
 emission_shape = 1
 emission_sphere_radius = 1920.0
-gravity = Vector2(0, -50)
+gravity = Vector2(0, -30)
 process_material = SubResource("ParticleProcessMaterial_1")
-
-[node name="ButtonsImage" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -400.0
-offset_top = -300.0
-offset_right = 400.0
-offset_bottom = 300.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("3")
-expand_mode = 1
-stretch_mode = 4
 
 [node name="Overlay" type="ColorRect" parent="."]
 layout_mode = 1
@@ -145,7 +165,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.3)
+color = Color(0, 0, 0, 0.45)
 
 [node name="ButtonsContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -155,42 +175,93 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -225.0
-offset_top = -200.0
+offset_top = -150.0
 offset_right = 225.0
-offset_bottom = 250.0
+offset_bottom = 150.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 15
+theme_override_constants/separation = 25
+alignment = 1
 
-[node name="NewGameButton" type="TextureButton" parent="ButtonsContainer"]
+[node name="NewGameButton" type="Button" parent="ButtonsContainer"]
 layout_mode = 2
 custom_minimum_size = Vector2(450, 90)
-focus_mode = 2
-mouse_filter = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_1")
+theme_override_styles/hover = SubResource("StyleBoxFlat_2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3")
+theme_override_fonts/font = ExtResource("6")
+theme_override_font_sizes/font_size = 28
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.5, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 1, 1, 1)
+theme_override_constants/outline_size = 4
+text = "START NEW GAME"
+flat = false
 
-[node name="ReloadButton" type="TextureButton" parent="ButtonsContainer"]
+[node name="ReloadButton" type="Button" parent="ButtonsContainer"]
 layout_mode = 2
 custom_minimum_size = Vector2(450, 90)
-focus_mode = 2
-mouse_filter = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_1")
+theme_override_styles/hover = SubResource("StyleBoxFlat_2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3")
+theme_override_fonts/font = ExtResource("6")
+theme_override_font_sizes/font_size = 28
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.5, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 1, 1, 1)
+theme_override_constants/outline_size = 4
+text = "RELOAD LAST GAME"
+flat = false
 
-[node name="StageButton" type="TextureButton" parent="ButtonsContainer"]
+[node name="StageButton" type="Button" parent="ButtonsContainer"]
 layout_mode = 2
 custom_minimum_size = Vector2(450, 90)
-focus_mode = 2
-mouse_filter = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_1")
+theme_override_styles/hover = SubResource("StyleBoxFlat_2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3")
+theme_override_fonts/font = ExtResource("6")
+theme_override_font_sizes/font_size = 28
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.5, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 1, 1, 1)
+theme_override_constants/outline_size = 4
+text = "STAGE SELECTION"
+flat = false
 
-[node name="ShopButton" type="TextureButton" parent="ButtonsContainer"]
+[node name="ShopButton" type="Button" parent="ButtonsContainer"]
 layout_mode = 2
 custom_minimum_size = Vector2(450, 90)
-focus_mode = 2
-mouse_filter = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_1")
+theme_override_styles/hover = SubResource("StyleBoxFlat_2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3")
+theme_override_fonts/font = ExtResource("6")
+theme_override_font_sizes/font_size = 28
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.5, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 1, 1, 1)
+theme_override_constants/outline_size = 4
+text = "SHOP"
+flat = false
 
-[node name="BackButton" type="TextureButton" parent="ButtonsContainer"]
+[node name="BackButton" type="Button" parent="ButtonsContainer"]
 layout_mode = 2
 custom_minimum_size = Vector2(450, 90)
-focus_mode = 2
-mouse_filter = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_1")
+theme_override_styles/hover = SubResource("StyleBoxFlat_2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3")
+theme_override_fonts/font = ExtResource("6")
+theme_override_font_sizes/font_size = 28
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.5, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 1, 1, 1)
+theme_override_constants/outline_size = 4
+text = "BACK TO MAIN MENU"
+flat = false
 
 [node name="ButtonFX" type="AnimationPlayer" parent="."]
 libraries = {
@@ -198,15 +269,14 @@ libraries = {
 }
 
 [node name="HoverSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6")
+stream = ExtResource("5")
 volume_db = -8.0
 
 [node name="ClickSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5")
+stream = ExtResource("4")
 volume_db = -5.0
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4")
+stream = ExtResource("3")
 volume_db = -6.0
 autoplay = true
-
