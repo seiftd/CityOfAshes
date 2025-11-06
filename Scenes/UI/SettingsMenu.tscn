@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://settings_menu_scene"]
+[gd_scene load_steps=12 format=3 uid="uid://settings_menu_scene"]
 
 [ext_resource type="Script" path="res://Scripts/UI/SettingsMenu.gd" id="1"]
 [ext_resource type="Texture2D" path="res://assets/backgrounds/menus/menu_settings.jpg" id="2"]
@@ -71,6 +71,35 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(0.6, 0.9, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_2"]
+resource_name = "TogglePulse"
+length = 1.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VBoxContainer/HBox_SFX/ToggleButton_SFX:modulate:a")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.75, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [1.0, 0.7, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VBoxContainer/HBox_Music/ToggleButton_Music:modulate:a")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.75, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [1.0, 0.7, 1.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1"]
