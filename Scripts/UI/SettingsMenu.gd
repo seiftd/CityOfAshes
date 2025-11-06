@@ -1,107 +1,90 @@
 extends Control
 
 ## SettingsMenu - قائمة الإعدادات
-## يدير إعدادات الصوت والموسيقى
+## يستخدم AudioManager للتحكم في الصوت
 
-@onready var sfx_toggle: TextureButton = $VBoxContainer/HBox_SFX/ToggleButton_SFX
-@onready var music_toggle: TextureButton = $VBoxContainer/HBox_Music/ToggleButton_Music
-@onready var back_button: TextureButton = $VBoxContainer/BackButton
+@onready var toggle_sfx: TextureButton = $"VBoxContainer/HBox_SFX/ToggleButton_SFX"
+@onready var toggle_music: TextureButton = $"VBoxContainer/HBox_Music/ToggleButton_Music"
+@onready var back_btn: TextureButton = $"VBoxContainer/BackButton"
 @onready var toggle_fx: AnimationPlayer = $ToggleFX
 
-var sfx_hover: AudioStream
-var sfx_click: AudioStream
+const TEX_ON := preload("res://assets/ui/toggle_on.jpg")
+const TEX_OFF := preload("res://assets/ui/toggle_off.jpg")
 
-func _ready():
-	# تحميل الأصوات
-	if ResourceLoader.exists("res://assets/sfx/button_hover.mp3"):
-		sfx_hover = load("res://assets/sfx/button_hover.mp3")
-	if ResourceLoader.exists("res://assets/sfx/button_click.mp3"):
-		sfx_click = load("res://assets/sfx/button_click.mp3")
+var click_snd := preload("res://assets/sfx/button_click.mp3")
+var hover_snd := preload("res://assets/sfx/button_hover.mp3")
+
+var asp_click: AudioStreamPlayer
+var asp_hover: AudioStreamPlayer
+
+func _ready() -> void:
+	# SFX players
+	asp_click = AudioStreamPlayer.new()
+	asp_click.bus = "SFX"
+	add_child(asp_click)
 	
-	# إعداد الأزرار
-	_setup_buttons()
+	asp_hover = AudioStreamPlayer.new()
+	asp_hover.bus = "SFX"
+	add_child(asp_hover)
 	
-	# تحميل الإعدادات
-	_load_settings()
+	# Initialize states from AudioManager
+	_apply_toggle_visual(toggle_sfx, AudioManager.sfx_enabled)
+	_apply_toggle_visual(toggle_music, AudioManager.music_enabled)
+	
+	# Set initial button states
+	if toggle_sfx:
+		toggle_sfx.button_pressed = AudioManager.sfx_enabled
+	if toggle_music:
+		toggle_music.button_pressed = AudioManager.music_enabled
+	
+	# Connect signals
+	if toggle_sfx:
+		toggle_sfx.toggled.connect(_on_toggle_sfx)
+		toggle_sfx.mouse_entered.connect(_play_hover)
+		toggle_sfx.mouse_exited.connect(func(): _on_button_exit(toggle_sfx))
+	
+	if toggle_music:
+		toggle_music.toggled.connect(_on_toggle_music)
+		toggle_music.mouse_entered.connect(_play_hover)
+		toggle_music.mouse_exited.connect(func(): _on_button_exit(toggle_music))
+	
+	if back_btn:
+		back_btn.pressed.connect(_on_back)
+		back_btn.mouse_entered.connect(_play_hover)
+		back_btn.mouse_exited.connect(func(): _on_button_exit(back_btn))
 	
 	# بدء تأثير glow
 	if toggle_fx:
 		toggle_fx.play("GlowPulse")
 
-func _setup_buttons():
-	if sfx_toggle:
-		sfx_toggle.toggled.connect(_toggle_sfx)
-		sfx_toggle.mouse_entered.connect(func(): _on_button_hover(sfx_toggle))
-		sfx_toggle.mouse_exited.connect(func(): _on_button_exit(sfx_toggle))
-	
-	if music_toggle:
-		music_toggle.toggled.connect(_toggle_music)
-		music_toggle.mouse_entered.connect(func(): _on_button_hover(music_toggle))
-		music_toggle.mouse_exited.connect(func(): _on_button_exit(music_toggle))
-	
-	if back_button:
-		back_button.pressed.connect(_go_back)
-		back_button.mouse_entered.connect(func(): _on_button_hover(back_button))
-		back_button.mouse_exited.connect(func(): _on_button_exit(back_button))
+func _on_toggle_sfx() -> void:
+	var new_state := not AudioManager.sfx_enabled
+	AudioManager.set_sfx_enabled(new_state)
+	_apply_toggle_visual(toggle_sfx, new_state)
+	_play_click()
 
-func _on_button_hover(button: TextureButton):
-	# تأثير hover - تكبير
-	var tween = create_tween()
-	tween.tween_property(button, "scale", Vector2(1.08, 1.08), 0.2)
-	
-	# تشغيل صوت hover
-	_play_sound(sfx_hover)
+func _on_toggle_music() -> void:
+	var new_state := not AudioManager.music_enabled
+	AudioManager.set_music_enabled(new_state)
+	_apply_toggle_visual(toggle_music, new_state)
+	_play_click()
 
-func _on_button_exit(button: TextureButton):
+func _apply_toggle_visual(btn: TextureButton, enabled: bool) -> void:
+	if not btn:
+		return
+	
+	btn.texture_normal = TEX_ON if enabled else TEX_OFF
+	btn.texture_hover = btn.texture_normal
+	btn.texture_pressed = btn.texture_normal
+	btn.modulate = Color(1, 1, 1, 1) if enabled else Color(0.7, 0.7, 0.7, 1)
+
+func _on_button_exit(button: Control):
 	# إرجاع الحجم الطبيعي
 	var tween = create_tween()
 	tween.tween_property(button, "scale", Vector2(1.0, 1.0), 0.2)
 
-func _toggle_sfx(button_pressed: bool):
-	# التحكم في SFX bus
-	var sfx_bus_index = AudioServer.get_bus_index("SFX")
-	if sfx_bus_index == -1:
-		# إنشاء SFX bus إذا لم يكن موجوداً
-		sfx_bus_index = AudioServer.bus_count
-		AudioServer.add_bus(sfx_bus_index)
-		AudioServer.set_bus_name(sfx_bus_index, "SFX")
-	
-	if sfx_bus_index >= 0:
-		AudioServer.set_bus_mute(sfx_bus_index, !button_pressed)
-	
-	# تحديث modulate بناءً على الحالة
-	_update_toggle_visual(sfx_toggle, button_pressed)
-	
-	_play_sound(sfx_click)
-	_save_settings()
-
-func _toggle_music(button_pressed: bool):
-	# التحكم في Music bus
-	var music_bus_index = AudioServer.get_bus_index("Music")
-	if music_bus_index == -1:
-		# إنشاء Music bus إذا لم يكن موجوداً
-		music_bus_index = AudioServer.bus_count
-		AudioServer.add_bus(music_bus_index)
-		AudioServer.set_bus_name(music_bus_index, "Music")
-	
-	if music_bus_index >= 0:
-		AudioServer.set_bus_mute(music_bus_index, !button_pressed)
-	
-	# تحديث modulate بناءً على الحالة
-	_update_toggle_visual(music_toggle, button_pressed)
-	
-	_play_sound(sfx_click)
-	_save_settings()
-
-func _update_toggle_visual(toggle: TextureButton, is_on: bool):
-	if toggle:
-		if is_on:
-			toggle.modulate = Color(1, 1, 1, 1)
-		else:
-			toggle.modulate = Color(0.6, 0.6, 0.6, 1)
-
-func _go_back():
-	_play_sound(sfx_click)
+func _on_back() -> void:
+	_play_click()
 	
 	# fade out
 	var fade_out = create_tween()
@@ -111,48 +94,12 @@ func _go_back():
 	
 	get_tree().change_scene_to_file("res://Scenes/UI/MainMenu.tscn")
 
-func _play_sound(sound: AudioStream):
-	if sound:
-		var player = AudioStreamPlayer.new()
-		player.stream = sound
-		player.volume_db = -6.0
-		add_child(player)
-		player.play()
-		await player.finished
-		player.queue_free()
+func _play_click() -> void:
+	if click_snd and asp_click:
+		asp_click.stream = click_snd
+		asp_click.play()
 
-func _save_settings():
-	var data = {
-		"sfx": sfx_toggle.button_pressed if sfx_toggle else true,
-		"music": music_toggle.button_pressed if music_toggle else false
-	}
-	
-	var file = FileAccess.open("user://settings.save", FileAccess.WRITE)
-	if file:
-		file.store_var(data)
-		file.close()
-
-func _load_settings():
-	if FileAccess.file_exists("user://settings.save"):
-		var file = FileAccess.open("user://settings.save", FileAccess.READ)
-		if file:
-			var data = file.get_var()
-			file.close()
-			
-			if sfx_toggle:
-				var sfx_state = data.get("sfx", true)
-				sfx_toggle.button_pressed = sfx_state
-				_update_toggle_visual(sfx_toggle, sfx_state)
-			if music_toggle:
-				var music_state = data.get("music", false)
-				music_toggle.button_pressed = music_state
-				_update_toggle_visual(music_toggle, music_state)
-	else:
-		# القيم الافتراضية
-		if sfx_toggle:
-			sfx_toggle.button_pressed = true
-			_update_toggle_visual(sfx_toggle, true)
-		if music_toggle:
-			music_toggle.button_pressed = false
-			_update_toggle_visual(music_toggle, false)
-
+func _play_hover() -> void:
+	if hover_snd and asp_hover:
+		asp_hover.stream = hover_snd
+		asp_hover.play()
