@@ -1,10 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://level1_scene"]
+[gd_scene load_steps=6 format=3 uid="uid://level1_scene"]
 
 [ext_resource type="Texture2D" path="res://assets/backgrounds/levels/level1_bg_far_01.png" id="1"]
 [ext_resource type="Texture2D" path="res://assets/backgrounds/levels/level1_bg_mid_01.png" id="2"]
 [ext_resource type="TileSet" path="res://assets/tilesets/level1_ground_tileset.tres" id="3"]
+[ext_resource type="PackedScene" uid="uid://player_entity_scene" path="res://Scenes/Entities/Player.tscn" id="4"]
+[ext_resource type="Script" path="res://Scripts/Levels/Level1.gd" id="5"]
 
 [node name="Level1" type="Node2D"]
+script = ExtResource(5)
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 transform = Transform2D(1, 0, 0, 1, 0, 0)
@@ -13,8 +16,9 @@ scroll_offset = Vector2(0, 0)
 scroll_base_offset = Vector2(0, 0)
 
 [node name="FarLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2(0.1, 0.1)
-motion_mirroring = Vector2(0, 0)
+transform = Transform2D(1, 0, 0, 1, 0, 0)
+motion_scale = Vector2(0.1, 0)
+motion_mirroring = Vector2(1920, 0)
 motion_offset = Vector2(0, 0)
 
 [node name="FarTextureRect" type="TextureRect" parent="ParallaxBackground/FarLayer"]
@@ -29,13 +33,15 @@ offset_bottom = 1080.0
 grow_horizontal = 2
 grow_vertical = 2
 z_index = -3
+visible = true
 texture = ExtResource(1)
 expand_mode = 4
 stretch_mode = 5
 
 [node name="MidLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2(0.3, 0.3)
-motion_mirroring = Vector2(0, 0)
+transform = Transform2D(1, 0, 0, 1, 0, 0)
+motion_scale = Vector2(0.3, 0)
+motion_mirroring = Vector2(1920, 0)
 motion_offset = Vector2(0, 0)
 
 [node name="MidTextureRect" type="TextureRect" parent="ParallaxBackground/MidLayer"]
@@ -50,13 +56,15 @@ offset_bottom = 1080.0
 grow_horizontal = 2
 grow_vertical = 2
 z_index = -2
+visible = true
 texture = ExtResource(2)
 expand_mode = 4
 stretch_mode = 5
 
 [node name="FogLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2(0.5, 0.5)
-motion_mirroring = Vector2(0, 0)
+transform = Transform2D(1, 0, 0, 1, 0, 0)
+motion_scale = Vector2(0.5, 0)
+motion_mirroring = Vector2(1920, 0)
 motion_offset = Vector2(0, 0)
 
 [node name="FogOverlay" type="ColorRect" parent="ParallaxBackground/FogLayer"]
@@ -71,27 +79,36 @@ offset_bottom = 1080.0
 grow_horizontal = 2
 grow_vertical = 2
 z_index = -1
+visible = true
 color = Color(0, 0, 0, 0.4)
 mouse_filter = 2
 
 [node name="RoadTileMap" type="TileMap" parent="."]
-transform = Transform2D(1, 0, 0, 1, 0, 0)
+transform = Transform2D(1, 0, 0, 1, 0, 540)
 z_index = 0
 tile_set = ExtResource(3)
 format = 2
 layer = 0
 tile_data = PackedInt32Array()
 
+[node name="Player" parent="." instance=ExtResource(4)]
+transform = Transform2D(1, 0, 0, 1, 960, 800)
+
 [node name="Camera2D" type="Camera2D" parent="."]
 transform = Transform2D(1, 0, 0, 1, 0, 0)
+offset = Vector2(0, 100)
 enabled = true
 limit_smoothed = false
+limit_left = 0
+limit_top = 0
+limit_right = 1920
+limit_bottom = 1080
 drag_left_margin = 0.2
 drag_top_margin = 0.2
 drag_right_margin = 0.2
 drag_bottom_margin = 0.2
 position_smoothing_enabled = true
-position_smoothing_speed = 5.0
+position_smoothing_speed = 4.0
 rotation_smoothing_enabled = false
 rotation_smoothing_speed = 0.5
 zoom = Vector2(1, 1)
