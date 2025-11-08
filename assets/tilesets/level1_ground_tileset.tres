@@ -1,0 +1,18 @@
+[gd_resource type="TileSet" format=2 load_steps=3]
+
+[ext_resource type="Texture2D" path="res://assets/tilesets/road_tile.png" id="1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
+size = Vector2(64, 64)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1"]
+texture = ExtResource(1)
+texture_region_size = Vector2i(64, 64)
+0:0/0/physics_layer_0/0/shape = SubResource("RectangleShape2D_1")
+0:0/0/physics_layer_0/0/polygon_0 = PackedVector2Array(0, 0, 64, 0, 64, 64, 0, 64)
+
+[resource]
+tile_size = Vector2i(64, 64)
+physics_layer_0/collision_layer = 1
+physics_layer_0/collision_mask = 1
+sources/0 = SubResource("TileSetAtlasSource_1")
