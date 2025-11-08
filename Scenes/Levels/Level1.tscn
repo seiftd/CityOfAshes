@@ -1,223 +1,80 @@
-[gd_scene load_steps=20 format=3 uid="uid://level1_playable_scene"]
+[gd_scene load_steps=5 format=3 uid="uid://level1_scene"]
 
-[ext_resource type="PackedScene" path="res://Scenes/Entities/Player.tscn" id="1"]
-[ext_resource type="PackedScene" path="res://Scenes/Entities/Zombie.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://Scenes/Entities/HealthKit.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://Scenes/Entities/AmmoPack.tscn" id="4"]
-[ext_resource type="Script" path="res://Scripts/Levels/Level1.gd" id="5"]
-[ext_resource type="Script" path="res://Scripts/UI/GameHUD.gd" id="6"]
-[ext_resource type="Texture2D" path="res://assets/backgrounds/parallax/sky_layer.jpg" id="7"]
-[ext_resource type="TileSet" path="res://assets/tilesets/city_tileset.tres" id="8"]
-[ext_resource type="AudioStream" path="res://assets/music/level1_theme.ogg" id="9"]
-[ext_resource type="FontFile" path="res://assets/fonts/PressStart2P-Regular.ttf" id="10"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
-bg_color = Color(0.2, 0, 0, 0.8)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 0, 0, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2"]
-bg_color = Color(0, 0.5, 0, 0.8)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0, 1, 0, 1)
+[ext_resource type="Texture2D" path="res://assets/backgrounds/levels/level1_bg_far_01.png" id="1"]
+[ext_resource type="Texture2D" path="res://assets/backgrounds/levels/level1_bg_mid_01.png" id="2"]
+[ext_resource type="TileSet" path="res://assets/tilesets/level1_ground_tileset.tres" id="3"]
 
 [node name="Level1" type="Node2D"]
-script = ExtResource("5")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+scroll_base_scale = Vector2(1, 1)
 
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2(0.5, 0.5)
-motion_mirroring = Vector2(1920, 1080)
+[node name="FarLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.2, 0)
+motion_mirroring = Vector2(1920, 0)
 
-[node name="SkyLayer" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-texture = ExtResource("7")
-scale = Vector2(2, 2)
-
-[node name="TileMap_Background" type="TileMap" parent="."]
-z_index = -1
-tile_set = ExtResource("8")
-format = 2
-layer = 0
-
-[node name="TileMap_Ground" type="TileMap" parent="."]
-position = Vector2(0, 800)
-z_index = 0
-tile_set = ExtResource("8")
-format = 2
-layer = 1
-tile_data = PackedInt32Array(0, 0, 1, 0, 1, 0, 1, 0, 2, 0, 1, 0, 3, 0, 1, 0, 4, 0, 1, 0, 5, 0, 1, 0, 6, 0, 1, 0, 7, 0, 1, 0, 8, 0, 1, 0, 9, 0, 1, 0, 10, 0, 1, 0, 11, 0, 1, 0, 12, 0, 1, 0, 13, 0, 1, 0, 14, 0, 1, 0, 15, 0, 1, 0, 16, 0, 1, 0, 17, 0, 1, 0, 18, 0, 1, 0, 19, 0, 1, 0, 20, 0, 1, 0, 21, 0, 1, 0, 22, 0, 1, 0, 23, 0, 1, 0, 24, 0, 1, 0, 25, 0, 1, 0, 26, 0, 1, 0, 27, 0, 1, 0, 28, 0, 1, 0, 29, 0, 1, 0, 30, 0, 1, 0, 31, 0, 1, 0, 32, 0, 1, 0, 33, 0, 1, 0, 34, 0, 1, 0, 35, 0, 1, 0, 36, 0, 1, 0, 37, 0, 1, 0, 38, 0, 1, 0, 39, 0, 1, 0, 40, 0, 1, 0, 41, 0, 1, 0, 42, 0, 1, 0, 43, 0, 1, 0, 44, 0, 1, 0, 45, 0, 1, 0, 46, 0, 1, 0, 47, 0, 1, 0, 48, 0, 1, 0, 49, 0, 1, 0, 50, 0, 1, 0, 51, 0, 1, 0, 52, 0, 1, 0, 53, 0, 1, 0, 54, 0, 1, 0, 55, 0, 1, 0, 56, 0, 1, 0, 57, 0, 1, 0, 58, 0, 1, 0, 59, 0, 1, 0, 60, 0, 1, 0, 61, 0, 1, 0, 62, 0, 1, 0, 63, 0, 1, 0, 64, 0, 1, 0, 65, 0, 1, 0, 66, 0, 1, 0, 67, 0, 1, 0, 68, 0, 1, 0, 69, 0, 1, 0, 70, 0, 1, 0, 71, 0, 1, 0, 72, 0, 1, 0, 73, 0, 1, 0, 74, 0, 1, 0, 75, 0, 1, 0, 76, 0, 1, 0, 77, 0, 1, 0, 78, 0, 1, 0, 79, 0, 1, 0, 80, 0, 1, 0, 81, 0, 1, 0, 82, 0, 1, 0, 83, 0, 1, 0, 84, 0, 1, 0, 85, 0, 1, 0, 86, 0, 1, 0, 87, 0, 1, 0, 88, 0, 1, 0, 89, 0, 1, 0, 90, 0, 1, 0, 91, 0, 1, 0, 92, 0, 1, 0, 93, 0, 1, 0, 94, 0, 1, 0, 95, 0, 1, 0, 96, 0, 1, 0, 97, 0, 1, 0, 98, 0, 1, 0, 99, 0, 1, 0, 100, 0, 1, 0, 101, 0, 1, 0, 102, 0, 1, 0, 103, 0, 1, 0, 104, 0, 1, 0, 105, 0, 1, 0, 106, 0, 1, 0, 107, 0, 1, 0, 108, 0, 1, 0, 109, 0, 1, 0, 110, 0, 1, 0, 111, 0, 1, 0, 112, 0, 1, 0, 113, 0, 1, 0, 114, 0, 1, 0, 115, 0, 1, 0, 116, 0, 1, 0, 117, 0, 1, 0, 118, 0, 1, 0, 119, 0, 1, 0)
-
-[node name="TileMap_Foreground" type="TileMap" parent="."]
-z_index = 1
-tile_set = ExtResource("8")
-format = 2
-layer = 2
-
-[node name="Player" parent="." instance=ExtResource("1")]
-position = Vector2(100, 700)
-
-[node name="Enemies" type="Node2D" parent="."]
-
-[node name="Enemy1" parent="Enemies" instance=ExtResource("2")]
-position = Vector2(500, 700)
-
-[node name="Enemy2" parent="Enemies" instance=ExtResource("2")]
-position = Vector2(1200, 700)
-
-[node name="Items" type="Node2D" parent="."]
-
-[node name="HealthKit1" parent="Items" instance=ExtResource("3")]
-position = Vector2(800, 700)
-
-[node name="AmmoPack1" parent="Items" instance=ExtResource("4")]
-position = Vector2(1000, 700)
-
-[node name="Lighting" type="Node2D" parent="."]
-
-[node name="FireBarrel1" type="Node2D" parent="Lighting"]
-position = Vector2(600, 750)
-
-[node name="FireLight" type="Light2D" parent="Lighting/FireBarrel1"]
-energy = 1.5
-color = Color(1, 0.5, 0, 1)
-range_height = 150.0
-shadow_enabled = true
-
-[node name="FireBarrel2" type="Node2D" parent="Lighting"]
-position = Vector2(1500, 750)
-
-[node name="FireLight" type="Light2D" parent="Lighting/FireBarrel2"]
-energy = 1.5
-color = Color(1, 0.5, 0, 1)
-range_height = 150.0
-shadow_enabled = true
-
-[node name="NeonSign1" type="Node2D" parent="Lighting"]
-position = Vector2(900, 600)
-
-[node name="NeonLight" type="Light2D" parent="Lighting/NeonSign1"]
-energy = 1.2
-color = Color(0, 1, 1, 1)
-range_height = 100.0
-shadow_enabled = false
-
-[node name="Camera2D" type="Camera2D" parent="."]
-enabled = true
-limit_left = 0
-limit_top = 0
-limit_right = 4000
-limit_bottom = 1080
-position_smoothing_enabled = true
-position_smoothing_speed = 5.0
-
-[node name="HUD" type="CanvasLayer" parent="."]
-script = ExtResource("6")
-
-[node name="HUDContainer" type="Control" parent="HUD"]
-layout_mode = 3
+[node name="FarTextureRect" type="TextureRect" parent="ParallaxBackground/FarLayer"]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource(1)
+expand_mode = 1
+stretch_mode = 5
+modulate = Color(1, 1, 1, 1)
 
-[node name="HealthBar" type="ProgressBar" parent="HUD/HUDContainer"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = -60.0
-offset_right = 320.0
-offset_bottom = -20.0
-grow_vertical = 0
-max_value = 100.0
-value = 100.0
-show_percentage = false
-theme_override_styles/background = SubResource("StyleBoxFlat_1")
-theme_override_styles/fill = SubResource("StyleBoxFlat_2")
+[node name="MidLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.5, 0)
+motion_mirroring = Vector2(1920, 0)
 
-[node name="HealthLabel" type="Label" parent="HUD/HUDContainer"]
+[node name="MidTextureRect" type="TextureRect" parent="ParallaxBackground/MidLayer"]
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = -80.0
-offset_right = 320.0
-offset_bottom = -60.0
-grow_vertical = 0
-theme_override_fonts/font = ExtResource("10")
-theme_override_font_sizes/font_size = 16
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-text = "Health: 100/100"
-
-[node name="AmmoLabel" type="Label" parent="HUD/HUDContainer"]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -200.0
-offset_top = -60.0
-offset_right = -20.0
-offset_bottom = -20.0
-grow_horizontal = 0
-grow_vertical = 0
-theme_override_fonts/font = ExtResource("10")
-theme_override_font_sizes/font_size = 20
-theme_override_colors/font_color = Color(1, 1, 0, 1)
-text = "Ammo: 30"
-
-[node name="WaveLabel" type="Label" parent="HUD/HUDContainer"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -100.0
-offset_top = -60.0
-offset_right = 100.0
-offset_bottom = -20.0
 grow_horizontal = 2
-grow_vertical = 0
-theme_override_fonts/font = ExtResource("10")
-theme_override_font_sizes/font_size = 18
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-text = "Wave: 1"
+grow_vertical = 2
+texture = ExtResource(2)
+expand_mode = 1
+stretch_mode = 5
+modulate = Color(1, 1, 1, 1)
 
-[node name="PauseButton" type="Button" parent="HUD/HUDContainer"]
+[node name="FogOverlay" type="ColorRect" parent="."]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -120.0
-offset_top = 20.0
-offset_right = -20.0
-offset_bottom = 60.0
-grow_horizontal = 0
-grow_vertical = 0
-theme_override_fonts/font = ExtResource("10")
-theme_override_font_sizes/font_size = 14
-text = "PAUSE"
+grow_horizontal = 2
+grow_vertical = 2
+z_index = 2
+color = Color(0, 0, 0, 0.25)
+mouse_filter = 2
 
-[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("9")
-bus = "Music"
-volume_db = -6.0
-autoplay = true
+[node name="RoadTileMap" type="TileMap" parent="."]
+position = Vector2(0, 0)
+z_index = 3
+tile_set = ExtResource(3)
+format = 2
+layer = 0
+tile_data = PackedInt32Array()
 
-[node name="SFXPlayer" type="AudioStreamPlayer" parent="."]
-bus = "SFX"
-volume_db = -3.0
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(960, 540)
+enabled = true
+limit_left = 0
+limit_top = -100
+limit_right = 15000
+limit_bottom = 1180
+limit_smoothed = false
+drag_left_margin = 0.2
+drag_top_margin = 0.2
+drag_right_margin = 0.2
+drag_bottom_margin = 0.2
+position_smoothing_enabled = true
+position_smoothing_speed = 5.0
+rotation_smoothing_enabled = false
+rotation_smoothing_speed = 0.5
+zoom = Vector2(1, 1)
+ignore_rotation = false
