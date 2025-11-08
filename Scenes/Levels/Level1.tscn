@@ -7,11 +7,10 @@
 [node name="Level1" type="Node2D"]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-scroll_base_scale = Vector2(1, 1)
+scroll_base_scale = Vector2(0.5, 0.5)
 
 [node name="FarLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2(0.2, 0)
-motion_mirroring = Vector2(1920, 0)
 
 [node name="FarTextureRect" type="TextureRect" parent="ParallaxBackground/FarLayer"]
 layout_mode = 1
@@ -20,14 +19,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+z_index = -2
 texture = ExtResource(1)
 expand_mode = 1
 stretch_mode = 5
-modulate = Color(1, 1, 1, 1)
 
 [node name="MidLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2(0.5, 0)
-motion_mirroring = Vector2(1920, 0)
 
 [node name="MidTextureRect" type="TextureRect" parent="ParallaxBackground/MidLayer"]
 layout_mode = 1
@@ -36,20 +34,20 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+z_index = -1
 texture = ExtResource(2)
 expand_mode = 1
 stretch_mode = 5
-modulate = Color(1, 1, 1, 1)
 
-[node name="FogOverlay" type="ColorRect" parent="."]
+[node name="FogOverlay" type="ColorRect" parent="ParallaxBackground"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-z_index = 2
-color = Color(0, 0, 0, 0.25)
+z_index = 0
+color = Color(0, 0, 0, 0.4)
 mouse_filter = 2
 
 [node name="RoadTileMap" type="TileMap" parent="."]
@@ -61,20 +59,8 @@ layer = 0
 tile_data = PackedInt32Array()
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(960, 540)
+position = Vector2(0, 0)
 enabled = true
-limit_left = 0
-limit_top = -100
-limit_right = 15000
-limit_bottom = 1180
 limit_smoothed = false
-drag_left_margin = 0.2
-drag_top_margin = 0.2
-drag_right_margin = 0.2
-drag_bottom_margin = 0.2
-position_smoothing_enabled = true
-position_smoothing_speed = 5.0
-rotation_smoothing_enabled = false
-rotation_smoothing_speed = 0.5
 zoom = Vector2(1, 1)
-ignore_rotation = false
+current = true
