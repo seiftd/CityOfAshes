@@ -90,10 +90,15 @@ z_index = 0
 tile_set = ExtResource(3)
 format = 2
 layer = 0
+rendering_quadrant_size = 16
+collision_animatable = true
+collision_visibility_mode = 0
+navigation_visibility_mode = 0
 tile_data = PackedInt32Array()
 
 [node name="Player" parent="." instance=ExtResource(4)]
 transform = Transform2D(1, 0, 0, 1, 960, 540)
+z_index = 1
 collision_layer = 2
 collision_mask = 1
 
