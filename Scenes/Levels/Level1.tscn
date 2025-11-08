@@ -11,9 +11,10 @@ script = ExtResource(5)
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 transform = Transform2D(1, 0, 0, 1, 0, 0)
-scroll_base_scale = Vector2(0.5, 0.5)
+scroll_base_scale = Vector2(1, 1)
 scroll_offset = Vector2(0, 0)
 scroll_base_offset = Vector2(0, 0)
+ignore_camera_zoom = false
 
 [node name="FarLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 transform = Transform2D(1, 0, 0, 1, 0, 0)
@@ -84,7 +85,7 @@ color = Color(0, 0, 0, 0.4)
 mouse_filter = 2
 
 [node name="RoadTileMap" type="TileMap" parent="."]
-transform = Transform2D(1, 0, 0, 1, 0, 540)
+transform = Transform2D(1, 0, 0, 1, 0, 620)
 z_index = 0
 tile_set = ExtResource(3)
 format = 2
@@ -92,11 +93,13 @@ layer = 0
 tile_data = PackedInt32Array()
 
 [node name="Player" parent="." instance=ExtResource(4)]
-transform = Transform2D(1, 0, 0, 1, 960, 800)
+transform = Transform2D(1, 0, 0, 1, 960, 540)
+collision_layer = 2
+collision_mask = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
 transform = Transform2D(1, 0, 0, 1, 0, 0)
-offset = Vector2(0, 100)
+offset = Vector2(0, 120)
 enabled = true
 limit_smoothed = false
 limit_left = 0
@@ -108,9 +111,9 @@ drag_top_margin = 0.2
 drag_right_margin = 0.2
 drag_bottom_margin = 0.2
 position_smoothing_enabled = true
-position_smoothing_speed = 4.0
+position_smoothing_speed = 5.0
 rotation_smoothing_enabled = false
 rotation_smoothing_speed = 0.5
-zoom = Vector2(1, 1)
+zoom = Vector2(1.05, 1.05)
 ignore_rotation = false
 current = true
